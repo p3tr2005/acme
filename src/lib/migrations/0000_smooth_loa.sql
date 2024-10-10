@@ -21,7 +21,7 @@ CREATE TABLE `session` (
 );
 --> statement-breakpoint
 CREATE TABLE `user` (
-	`id` char(36) NOT NULL DEFAULT (UUID()),
+	`id` varchar(255) NOT NULL DEFAULT (UUID()),
 	`name` varchar(255),
 	`email` varchar(255),
 	`emailVerified` timestamp(3),
