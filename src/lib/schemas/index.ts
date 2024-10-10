@@ -1,15 +1,16 @@
+import { sql } from "drizzle-orm";
 import {
 	int,
 	timestamp,
 	mysqlTable,
 	primaryKey,
 	varchar,
-	serial,
+	char,
 } from "drizzle-orm/mysql-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
 export const users = mysqlTable("user", {
-	id: serial("id").primaryKey(),
+	id: char("id", { length: 36 }).primaryKey().default(sql`(UUID())`),
 	name: varchar("name", { length: 255 }),
 	email: varchar("email", { length: 255 }).unique(),
 	emailVerified: timestamp("emailVerified", {
