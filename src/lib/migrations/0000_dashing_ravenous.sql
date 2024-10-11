@@ -22,8 +22,9 @@ CREATE TABLE `session` (
 --> statement-breakpoint
 CREATE TABLE `user` (
 	`id` varchar(255) NOT NULL DEFAULT (UUID()),
-	`name` varchar(255),
-	`email` varchar(255),
+	`name` varchar(255) NOT NULL,
+	`email` varchar(255) NOT NULL,
+	`password` varchar(255),
 	`emailVerified` timestamp(3),
 	`image` varchar(255),
 	CONSTRAINT `user_id` PRIMARY KEY(`id`),

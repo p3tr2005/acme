@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "59694e96-0126-4061-8aa5-16f575d35b1a",
+  "id": "393cfa95-f6cf-47f6-98b6-bca4c1111a5c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -9,7 +9,7 @@
       "columns": {
         "userId": {
           "name": "userId",
-          "type": "char(36)",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -168,7 +168,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "char(36)",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
@@ -178,11 +178,18 @@
           "name": "name",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email": {
           "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password": {
+          "name": "password",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false,

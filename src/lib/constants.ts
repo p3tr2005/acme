@@ -1,1 +1,1 @@
-const DEFAULT_AUTH_REDIRECT = "/";
+export const DEFAULT_AUTH_REDIRECT = "/";

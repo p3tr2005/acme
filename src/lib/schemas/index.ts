@@ -10,8 +10,9 @@ import type { AdapterAccountType } from "next-auth/adapters";
 
 export const users = mysqlTable("user", {
 	id: varchar("id", { length: 255 }).primaryKey().default(sql`(UUID())`),
-	name: varchar("name", { length: 255 }),
-	email: varchar("email", { length: 255 }).unique(),
+	name: varchar("name", { length: 255 }).notNull(),
+	email: varchar("email", { length: 255 }).unique().notNull(),
+	password: varchar("password", { length: 255 }),
 	emailVerified: timestamp("emailVerified", {
 		mode: "date",
 		fsp: 3,

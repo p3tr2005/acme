@@ -4,6 +4,9 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { env } from "./lib/env";
 import { db } from "./lib/db";
 import { accounts, users } from "./lib/schemas";
+import { signInSchema } from "./lib/validations/auth";
+import { findUserByEmail } from "./lib/repositories/user-repo";
+import { compare } from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
 	adapter: DrizzleAdapter(db, {
@@ -18,14 +21,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 				password: { label: "Password", type: "password" },
 			},
 			async authorize(credentials) {
-				return null;
+				const { data: payload, success } = signInSchema.safeParse(credentials);
+
+				if (!success) return null;
+
+				const existingUser = await findUserByEmail(payload.email);
+
+				if (!existingUser || !existingUser.password) return null;
+
+				const isPasswordMatch = await compare(
+					payload.password,
+					existingUser.password,
+				);
+
+				if (!isPasswordMatch) return null;
+
+				return existingUser;
 			},
 		}),
 	],
 	secret: env.AUTH_SECRET,
+	session: {
+		strategy: "jwt",
+	},
 	pages: {
-		signIn: "/sign-in",
+		signIn: "auth/sign-in",
 		error: "/auth/error",
-		newUser: DEFAULT_AUTH_REDIRECT,
 	},
 });
