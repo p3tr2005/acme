@@ -54,7 +54,24 @@ export const sessions = mysqlTable("session", {
 	expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
+export const stores = mysqlTable("store", {
+	id: varchar("id", { length: 255 }).primaryKey().default(sql`(UUID())`),
+	name: varchar("name", { length: 255 }).notNull(),
+	userId: varchar("user_id", { length: 255 })
+		.notNull()
+		.references(() => users.id, { onDelete: "cascade" }),
+
+	createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+	updatedAt: timestamp("updated_at", { mode: "date" })
+		.notNull()
+		.defaultNow()
+		.onUpdateNow(),
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+export type InsertStore = typeof stores.$inferInsert;
+export type Store = typeof stores.$inferSelect;
 
 export type Account = typeof accounts.$inferSelect;
