@@ -3,7 +3,7 @@ import type { Session } from "next-auth";
 import Profile from "@/ui/components/profile";
 import NavRoutes from "./routes";
 import { StoreSwitcher } from "./store-switcher";
-import { findStoresByIdAndByUserId } from "@/lib/repositories/store-repo";
+import { findStoresByUserId } from "@/lib/repositories/store-repo";
 import type { Store } from "@/lib/schemas";
 
 type Props = {
@@ -11,8 +11,8 @@ type Props = {
 	storeId: string;
 };
 
-const Navbar = async ({ user, storeId }: Props) => {
-	const stores = await findStoresByIdAndByUserId(storeId, user.id);
+const Navbar = async ({ user }: Props) => {
+	const stores = await findStoresByUserId(user.id);
 
 	const storeDTO = StoreDTO(stores);
 

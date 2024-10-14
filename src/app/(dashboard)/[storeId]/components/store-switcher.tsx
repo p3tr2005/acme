@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, ChevronsUpDown, Store } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -35,10 +35,12 @@ export const StoreSwitcher = ({ stores }: Props) => {
 	const [selected, setSelected] = useState(() =>
 		stores.find((store) => store.value === params.storeId),
 	);
-	const onModalOpen = useModalStore((state) => state.onOpen);
 
-	const onSelect = async () => {
-		//TODO: add logic to switch store
+	const onModalOpen = useModalStore((state) => state.onOpen);
+	const router = useRouter();
+
+	const onSelect = async (currentStoreId: string) => {
+		router.push(`/${currentStoreId}`);
 	};
 
 	return (
@@ -67,17 +69,25 @@ export const StoreSwitcher = ({ stores }: Props) => {
 							{stores.map((store) => (
 								<CommandItem
 									key={store.value}
-									value={store.value}
-									onSelect={onSelect}
+									value={store.label}
+									onSelect={() => onSelect(store.value)}
 								>
 									<Check
 										className={cn(
 											"mr-2 h-4 w-4",
-											selected ? "opacity-100" : "opacity-0",
+											store.value === params.storeId
+												? "opacity-100"
+												: "opacity-0",
 										)}
 									/>
 
-									<p className={cn(selected ? "font-bold" : "font-normal")}>
+									<p
+										className={cn(
+											store.value === params.storeId
+												? "font-bold"
+												: "font-normal",
+										)}
+									>
 										{store.label}
 									</p>
 								</CommandItem>

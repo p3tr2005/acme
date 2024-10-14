@@ -11,6 +11,14 @@ export const findStoreByUserId = async (userId: string) => {
 	return store;
 };
 
+export const findStoresByUserId = async (userId: string) => {
+	const stores = await db.query.stores.findMany({
+		where: (fields, operator) => operator.eq(fields.userId, userId),
+	});
+
+	return stores;
+};
+
 export const findStoreByIdAndByUserId = async (id: string, userId: string) => {
 	const store = await db
 		.select()

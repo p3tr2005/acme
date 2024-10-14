@@ -30,12 +30,10 @@ const DashboardLayout = async ({ children, params }: LayoutProps) => {
 	if (!found) redirect("/");
 
 	return (
-		<html lang="en">
-			<body className={jakartaSans.className}>
-				<Navbar storeId={data.storeId} user={session.user} />
-				{children}
-			</body>
-		</html>
+		<>
+			<Navbar storeId={data.storeId} user={session.user} />
+			{children}
+		</>
 	);
 };
 
