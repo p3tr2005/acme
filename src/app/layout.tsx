@@ -11,7 +11,7 @@ const Layout = ({ children }: Children) => {
       <body className={jakartaSans.className}>
         <ModalProvider />
         {children}
-        <Toaster richColors position="top-center" />
+        <Toaster richColors position="top-center" theme="light" />
       </body>
     </html>
   );

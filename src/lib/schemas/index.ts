@@ -68,6 +68,19 @@ export const stores = mysqlTable("store", {
 		.onUpdateNow(),
 });
 
+export const billboard = mysqlTable("billboard", {
+	id: varchar("id", { length: 255 }).primaryKey().default(sql`(UUID())`),
+	storeId: varchar("store_id", { length: 255 })
+		.notNull()
+		.references(() => stores.id),
+	label: varchar("label", { length: 255 }).notNull(),
+	imageUrl: varchar("image_url", { length: 255 }).notNull(),
+	createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+	updatedAt: timestamp("updated_at", { mode: "date" })
+		.notNull()
+		.defaultNow()
+		.onUpdateNow(),
+});
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 

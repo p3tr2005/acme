@@ -1,6 +1,7 @@
+import Link from "next/link";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/components/avatar";
 import type { AvatarImageProps } from "@radix-ui/react-avatar";
-import Link from "next/link";
 
 type Props = {
 	fallback: string;

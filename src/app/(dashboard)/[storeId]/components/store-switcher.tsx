@@ -2,7 +2,7 @@
 
 import { Check, ChevronsUpDown, Store } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/ui/components/button";
@@ -30,14 +30,15 @@ type Props = {
 
 export const StoreSwitcher = ({ stores }: Props) => {
 	const params = useParams();
+	const router = useRouter();
 
 	const [open, setOpen] = useState(false);
-	const [selected, setSelected] = useState(() =>
-		stores.find((store) => store.value === params.storeId),
-	);
-
 	const onModalOpen = useModalStore((state) => state.onOpen);
-	const router = useRouter();
+
+	const selected = useMemo(
+		() => stores.find((store) => store.value === params.storeId),
+		[stores, params.storeId],
+	);
 
 	const onSelect = async (currentStoreId: string) => {
 		router.push(`/${currentStoreId}`);
@@ -96,7 +97,7 @@ export const StoreSwitcher = ({ stores }: Props) => {
 
 						<Button
 							onClick={onModalOpen}
-							className="rounded-none w-full bg-green-600 text-white font-semibold"
+							className="rounded-none w-full bg-foreground text-white font-semibold"
 						>
 							Create new store
 						</Button>

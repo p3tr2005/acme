@@ -40,3 +40,23 @@ export const findStoresByIdAndByUserId = async (id: string, userId: string) => {
 export const insertStore = async (store: InsertStore) => {
 	return await db.insert(stores).values(store);
 };
+
+export const updateStoreByIdAndByUserId = async (
+	id: string,
+	userId: string,
+	store: Partial<InsertStore>,
+) => {
+	return await db
+		.update(stores)
+		.set(store)
+		.where(and(eq(stores.id, id), eq(stores.userId, userId)));
+};
+
+export const deleteStoreByIdAndByUserId = async (
+	id: string,
+	userId: string,
+) => {
+	return await db
+		.delete(stores)
+		.where(and(eq(stores.id, id), eq(stores.userId, userId)));
+};
